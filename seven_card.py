@@ -24,7 +24,7 @@ def best_hand(hand):
     '''
     Get 5 hands out from 7 hands. And get the best one. 
     '''
-    best = max(itertools.combinations(hand, 5), key=lambda h: hand_rank(h))
+    best = max(itertools.combinations(hand, 5), key=hand_rank)
     return best
     
     # Your code here
