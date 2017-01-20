@@ -65,22 +65,22 @@ def look_symmtery(axis, text):
 def longest_subpalindrome_slice(text):
     "Return (i, j) such that text[i:j] is the longest palindrome in text."
     # Your code here
-    length = len(text)
-    begin, end = 0, 0
+    if text == '': return 0, 0
 
-    for i in range(length-1):
-        if is_palindrom(text[i: i+2]):
-            temp_begin, temp_end = i, look_forward(i, i+2, text)
-        elif i > 0 and is_palindrom(text[i-1: i+2]):
-            temp_begin, temp_end = look_symmtery(i, text)
-        else:
-            temp_begin, temp_end = i, i
+    candidates = [grow(start, end, text)
+                  for start in range(len(text))
+                  for end in (start, start+1)]
 
-        if temp_end - temp_begin > end - begin:
-            begin, end = temp_begin, temp_end
+    return max(candidates, key=lambda slice: slice[1] - slice[0])
 
+
+def grow(begin, end, text):
+    ## the text[begin-1] is amazing!
+    while (begin > 0 and end < len(text)
+        and text[begin-1].upper() == text[end].upper()):
+            begin -= 1; end += 1
     return begin, end
-    
+
 
 def test_is_palindrom():
     L = is_palindrom
@@ -116,9 +116,11 @@ def test():
     
     #L = bruce_subpalindrome
     L = longest_subpalindrome_slice
+    print( L('racecar') )
     assert L('racecar') == (0, 7)
     assert L('Racecar') == (0, 7)
     assert L('RacecarX') == (0, 7)
+    print( L('Race carr') )
     assert L('Race carr') == (7, 9)
     assert L('') == (0, 0)
     assert L('something rac e car going') == (8,21)
