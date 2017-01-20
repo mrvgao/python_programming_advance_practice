@@ -26,12 +26,12 @@ def floor_puzzle():
     BOTTOM = 1
     result = next((Hopper, Kay, Liskov, Perlis, Ritchie)
             for Hopper, Kay, Liskov, Perlis, Ritchie in itertools.permutations(range(BOTTOM, TOP+1))
-            if Hopper is not TOP
-            if Kay is not BOTTOM
-            if Liskov is not TOP and Liskov is not BOTTOM
-            if Perlis - Kay > 0
-            if abs(Ritchie - Liskov) != 1
-            if abs(Liskov - Kay) != 1
+            if  Hopper is not TOP
+                and Kay is not BOTTOM
+                and Liskov is not TOP and Liskov is not BOTTOM
+                and Perlis - Kay > 0
+                and abs(Ritchie - Liskov) != 1
+                and abs(Liskov - Kay) != 1
             )
     return list(result)
 
